@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Liam Milinazzo | Game Development Portfolio</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --bg-soft: #121933;
+      --panel: rgba(255, 255, 255, 0.06);
+      --panel-strong: rgba(255, 255, 255, 0.1);
+      --text: #eef2ff;
+      --muted: #b9c0dd;
+      --accent: #7c9cff;
+      --accent-2: #6ee7f9;
+      --border: rgba(255, 255, 255, 0.12);
+      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+      --radius: 22px;
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: Inter, Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(124, 156, 255, 0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(110, 231, 249, 0.12), transparent 25%),
+        linear-gradient(180deg, #08101d 0%, #0b1020 100%);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { width: 100%; display: block; }
+    .container { width: min(92%, var(--max-width)); margin: 0 auto; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(14px);
+      background: rgba(8, 16, 29, 0.75);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      gap: 16px;
+    }
+
+    .brand { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; }
+    .brand span { color: var(--accent-2); }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      transition: 0.2s ease;
+      font-size: 0.95rem;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: #08101d;
+      font-weight: 700;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 12px 28px rgba(124, 156, 255, 0.25);
+    }
+
+    .button:hover { transform: translateY(-2px); }
+
+    .button.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    .hero { padding: 84px 0 58px; }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 34px;
+      align-items: center;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      color: var(--accent-2);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.78rem;
+      margin-bottom: 18px;
+      font-weight: 700;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4.7rem);
+      line-height: 1.04;
+      margin-bottom: 18px;
+    }
+
+    .hero p {
+      max-width: 680px;
+      color: var(--muted);
+      font-size: 1.06rem;
+      margin-bottom: 28px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(120px, 1fr));
+      gap: 16px;
+    }
+
+    .stat-card,
+    .hero-card,
+    .section-card,
+    .project-card,
+    .contact-card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .stat-card { padding: 18px; }
+    .stat-card h3 { font-size: 1.5rem; margin-bottom: 6px; }
+    .stat-card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 0; }
+
+    .hero-card { padding: 18px; }
+
+    .hero-card img {
+      aspect-ratio: 4 / 5;
+      object-fit: cover;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    section { padding: 24px 0 68px; }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      align-items: end;
+      margin-bottom: 26px;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      margin-bottom: 8px;
+    }
+
+    .section-header p {
+      color: var(--muted);
+      max-width: 650px;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.08fr 0.92fr;
+      gap: 24px;
+    }
+
+    .section-card { padding: 28px; }
+    .section-card p,
+    .section-card li { color: var(--muted); }
+
+    .skills-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      list-style: none;
+      margin-top: 14px;
+    }
+
+    .skills-list li {
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-size: 0.94rem;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
+    }
+
+    .project-card { overflow: hidden; }
+
+    .project-image {
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      background: linear-gradient(135deg, rgba(124, 156, 255, 0.2), rgba(110, 231, 249, 0.1));
+    }
+
+    .project-content { padding: 22px; }
+
+    .project-tag {
+      display: inline-block;
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(124, 156, 255, 0.15);
+      color: #dbe4ff;
+      font-size: 0.8rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .project-content h3 { font-size: 1.45rem; margin-bottom: 10px; }
+    .project-content p { color: var(--muted); margin-bottom: 18px; }
+
+    .project-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+
+    .project-meta span {
+      font-size: 0.88rem;
+      color: var(--muted);
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+    }
+
+    .project-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .project-links a { font-weight: 600; color: var(--accent-2); }
+
+    .contact-card {
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 20px;
+      align-items: center;
+    }
+
+    .contact-card p { color: var(--muted); margin-top: 8px; }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 280px;
+    }
+
+    .contact-links a {
+      color: var(--text);
+      word-break: break-word;
+    }
+
+    footer {
+      padding: 30px 0 46px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 24px;
+    }
+
+    @media (max-width: 960px) {
+      .hero-grid,
+      .about-grid,
+      .contact-card,
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-header {
+        align-items: start;
+        flex-direction: column;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .nav { flex-direction: column; }
+      .nav-links { justify-content: center; }
+      .stats { grid-template-columns: 1fr; }
+      .hero { padding-top: 58px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="container nav">
+      <a href="#home" class="brand">Liam <span>Milinazzo</span></a>
+      <nav class="nav-links">
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a href="#projects" class="button">View Portfolio</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-grid">
+        <div>
+          <div class="eyebrow">Game Developer Portfolio</div>
+          <h1>Designing playful worlds, memorable mechanics, and polished player experiences.</h1>
+          <p>
+            I’m Liam Milinazzo, an Immersive Media and Game Development student at Northern Arizona University focused on game design, interactive media, and visual storytelling. My work combines creative direction, technical problem-solving, and collaborative development, with experience spanning published games, international game jam work, student career support, and AI quality evaluation.
+          </p>
+
+          <div class="hero-actions">
+            <a class="button" href="#projects">Explore My Games</a>
+            <a class="button secondary" href="#contact">Contact Me</a>
+          </div>
+
+          <div class="stats">
+            <div class="stat-card">
+              <h3>2</h3>
+              <p>Published games featured in this portfolio</p>
+            </div>
+            <div class="stat-card">
+              <h3>International</h3>
+              <p>Collaborative experience from a Japan game jam and study abroad project</p>
+            </div>
+            <div class="stat-card">
+              <h3>Multi-Role</h3>
+              <p>Game design, artwork, playtesting, collaboration, and production support</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-card">
+          <img src="images/headshot.jpeg" alt="Headshot of Liam Milinazzo" />
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">About Me</div>
+            <h2>Creative developer with a strong interest in teamwork, visual identity, and accessible gameplay</h2>
+          </div>
+          <p>
+            My projects are shaped by collaboration, cultural inspiration, and a desire to make games that feel inviting while still offering depth. I enjoy working across disciplines, contributing to both the artistic and design side of development, and building experiences that connect theme, mechanics, and player emotion.
+          </p>
+        </div>
+
+        <div class="about-grid">
+          <div class="section-card">
+            <h3 style="margin-bottom: 12px;">About Me</h3>
+            <p>
+              I am an Immersive Media and Game Development student at Northern Arizona University with experience in game design, visual media, international collaboration, and digital production. My academic background includes 3D fabrication, 3D modeling, and new media fundamentals, and my study abroad experience in Japan strengthened both my creative process and my perspective on game culture, design history, and collaborative development.
+            </p>
+            <p style="margin-top: 16px;">
+              Outside of game development, I work in student career support and AI quality evaluation. At NAU, I have worked with over 100 students through resume reviews, LinkedIn support, and career development guidance. I also work remotely training AI models through media evaluation, output-versus-input comparison, and quality control. These roles have strengthened my communication, analytical thinking, adaptability, and attention to detail.
+            </p>
+            <p style="margin-top: 16px;">
+              My creative and technical skill set includes Photoshop, InDesign, Lightroom, Premiere Pro, After Effects, Blender, Construct 3, Tinkercad, HTML, Python, C, C#, Java, JavaScript, JIRA, Confluence, and Unreal Engine 5. I am especially interested in building games and interactive experiences that are visually memorable, accessible to players, and grounded in strong collaboration and thoughtful design.
+            </p>
+          </div>
+
+          <div class="section-card">
+            <h3 style="margin-bottom: 12px;">Skills &amp; Tools</h3>
+            <ul class="skills-list">
+              <li>Game Design</li>
+              <li>Gameplay Systems</li>
+              <li>Level Design</li>
+              <li>3D Modeling</li>
+              <li>3D Fabrication</li>
+              <li>Visual Storytelling</li>
+              <li>Playtesting</li>
+              <li>Cross-Cultural Collaboration</li>
+              <li>Photoshop</li>
+              <li>InDesign</li>
+              <li>Lightroom</li>
+              <li>Premiere Pro</li>
+              <li>After Effects</li>
+              <li>Blender</li>
+              <li>Unreal Engine 5</li>
+              <li>Construct 3</li>
+              <li>Tinkercad</li>
+              <li>Python</li>
+              <li>HTML</li>
+              <li>Java</li>
+              <li>JavaScript</li>
+              <li>C</li>
+              <li>C#</li>
+              <li>JIRA</li>
+              <li>Confluence</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <div class="eyebrow">Featured Projects</div>
+            <h2>Published games and collaborative work</h2>
+          </div>
+          <p>
+            These projects highlight my experience in concept development, art direction, gameplay-focused thinking, and international team collaboration.
+          </p>
+        </div>
+
+        <div class="projects-grid">
+          <article class="project-card">
+            <img class="project-image" src="images/nara-order.jpg" alt="Screenshot from Nara Order" />
+            <div class="project-content">
+              <div class="project-tag">Published Game</div>
+              <h3>Nara Order</h3>
+              <p>
+                <strong>Nara Order</strong> is a single-player tycoon-style food stand game set in Nara Park and near Tōdai-ji, one of Japan’s most historically significant cultural locations. Players take on the role of a food stand employee serving a range of customers, from children ordering drinks and ramen to deer wanting biscuits and even Buddha requesting blessed water from the temple cleansing basin.
+              </p>
+              <div class="project-meta">
+                <span>Genre: Tycoon / Time Management</span>
+                <span>Mode: Single Player</span>
+                <span>Setting: Nara, Japan</span>
+              </div>
+              <p>
+                The gameplay revolves around reading the ticket shown at the top of the screen and quickly assembling the correct order before time runs out. Each successful order increases the player’s score, while missed orders reduce available lives. As the session continues, the pace intensifies, creating a simple but increasingly demanding gameplay loop built around speed, accuracy, and visual recognition.
+              </p>
+              <p>
+                What makes the project especially meaningful is how directly it reflects our group’s trip to Japan. The game’s setting is based on the archway we walked beneath before entering Tōdai-ji, and multiple items and characters are inspired by real details from Nara Park, including shika senbei, the temple water basin, deer interactions, architecture, and foods we personally experienced. The art direction was designed to capture a calm, semi-realistic anime atmosphere inspired by Japanese Buddhist temple environments and the accessible design philosophy often associated with Nintendo.
+              </p>
+              <p>
+                <strong>My contribution:</strong> I contributed to the creative development of the game’s visual and thematic direction, supported team collaboration, and helped shape a project centered on cultural respect, environmental inspiration, and accessible gameplay. The project also reflects skills developed through international collaboration and adapting ideas from firsthand historical and cultural experiences into interactive design.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-card">
+            <img class="project-image" src="images/sugar-scape.jpg" alt="Screenshot from Sugar Scape" />
+            <div class="project-content">
+              <div class="project-tag">Published Game</div>
+              <h3>Sugar Scape</h3>
+              <p>
+                <strong>Sugar Scape</strong> is a survival-based arcade maze game created during my Japanese study abroad experience with an international team. Players move through a colorful maze using the arrow keys, hunting cute creatures to increase their score while trying to survive as the number of enemies steadily grows.
+              </p>
+              <div class="project-meta">
+                <span>Genre: Survival / Arcade</span>
+                <span>Format: Team Game Jam Project</span>
+                <span>Controls: Arrow Keys + Space Bar</span>
+              </div>
+              <p>
+                The core loop is fast and straightforward: roam the maze, stay mobile, and eat nearby animals with the space bar when they are within range. The more the player consumes, the more creatures appear, turning the game into a test of movement, timing, and score optimization. The goal is to survive as long as possible while pushing for a new high score.
+              </p>
+              <p>
+                The project’s playful aesthetic came from team-created artwork developed during the game jam. I worked alongside Jason, Yerik, Hizac, and other collaborators to help bring the game together. The final result reflects both the chaotic fun of arcade design and the collaborative energy of building something quickly with an international team.
+              </p>
+              <p>
+                <strong>My contribution:</strong> I was part of the game jam team that developed the project during study abroad, contributing to the collaborative design and development process while working across language and cultural differences. The project strengthened my ability to communicate ideas clearly, adapt in fast-paced creative settings, and help shape a game around a simple but addictive loop.
+              </p>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="container">
+        <div class="contact-card">
+          <div>
+            <div class="eyebrow">Contact</div>
+            <h2>Let’s connect</h2>
+            <p>
+              If you’d like to talk about game development, collaboration, internships, or future creative opportunities, feel free to reach out.
+            </p>
+          </div>
+
+          <div class="contact-links">
+            <a class="button" href="mailto:ljm454@nau.edu">ljm454@nau.edu</a>
+            <a class="button secondary" href="https://www.linkedin.com/in/liam-milinazzo-213a97358/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
+            <a class="button secondary" href="https://ljm454.itch.io" target="_blank" rel="noopener noreferrer">View My itch.io</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-row">
+      <p>&copy; 2026 Liam Milinazzo. All rights reserved.</p>
+      <p>Portfolio focused on game design, collaboration, and interactive storytelling.</p>
+    </div>
+  </footer>
+</body>
+</html>
