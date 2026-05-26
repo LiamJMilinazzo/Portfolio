@@ -4,525 +4,797 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Liam Milinazzo | Game Development Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
   <style>
     :root {
-      --bg: #0b1020;
-      --bg-soft: #121933;
-      --panel: rgba(255, 255, 255, 0.06);
-      --panel-strong: rgba(255, 255, 255, 0.1);
-      --text: #eef2ff;
-      --muted: #b9c0dd;
-      --accent: #7c9cff;
-      --accent-2: #6ee7f9;
-      --border: rgba(255, 255, 255, 0.12);
-      --shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
-      --radius: 22px;
-      --max-width: 1180px;
+      --bg:          #0e0f11;
+      --bg-raised:   #141518;
+      --bg-card:     #1a1b1f;
+      --bg-subtle:   #202227;
+      --text:        #e8e6e1;
+      --text-mid:    #a09e99;
+      --text-dim:    #5e5c58;
+      --gold:        #b84040;
+      --gold-soft:   #d46060;
+      --gold-dim:    rgba(184, 64, 64, 0.12);
+      --gold-line:   rgba(184, 64, 64, 0.3);
+      --border:      rgba(255,255,255,0.07);
+      --border-mid:  rgba(255,255,255,0.11);
+      --radius-sm:   6px;
+      --radius:      12px;
+      --radius-lg:   18px;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+      --max-w: 1160px;
+      --col-gap: 28px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
 
     body {
-      font-family: Inter, Arial, Helvetica, sans-serif;
-      background:
-        radial-gradient(circle at top left, rgba(124, 156, 255, 0.18), transparent 30%),
-        radial-gradient(circle at top right, rgba(110, 231, 249, 0.12), transparent 25%),
-        linear-gradient(180deg, #08101d 0%, #0b1020 100%);
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.65;
+      background-color: var(--bg);
       color: var(--text);
-      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
     a { color: inherit; text-decoration: none; }
-    img { width: 100%; display: block; }
-    .container { width: min(92%, var(--max-width)); margin: 0 auto; }
+    img { display: block; width: 100%; }
 
+    .container {
+      width: min(92%, var(--max-w));
+      margin-inline: auto;
+    }
+
+    /* Topbar */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      backdrop-filter: blur(14px);
-      background: rgba(8, 16, 29, 0.75);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 100;
+      background: rgba(14, 15, 17, 0.9);
+      backdrop-filter: blur(16px) saturate(1.4);
+      border-bottom: 1px solid var(--border);
     }
 
     .nav {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 18px 0;
+      padding: 20px 0;
       gap: 16px;
     }
 
-    .brand { font-size: 1.05rem; font-weight: 700; letter-spacing: 0.04em; }
-    .brand span { color: var(--accent-2); }
+    .brand {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      letter-spacing: 0.01em;
+      color: var(--text);
+    }
+
+    .brand span { color: var(--gold); }
 
     .nav-links {
       display: flex;
-      gap: 24px;
       align-items: center;
-      flex-wrap: wrap;
+      gap: 32px;
     }
 
     .nav-links a {
-      color: var(--muted);
-      transition: 0.2s ease;
-      font-size: 0.95rem;
+      font-size: 0.85rem;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-mid);
+      transition: color 0.2s;
     }
 
     .nav-links a:hover { color: var(--text); }
 
-    .button {
+    .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 20px;
-      border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      color: #08101d;
-      font-weight: 700;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 12px 28px rgba(124, 156, 255, 0.25);
+      gap: 8px;
+      padding: 10px 22px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, border-color 0.2s, transform 0.15s;
     }
 
-    .button:hover { transform: translateY(-2px); }
+    .btn-primary {
+      background: var(--gold);
+      color: #f0eeeb;
+      border: 1px solid var(--gold);
+    }
 
-    .button.secondary {
+    .btn-primary:hover {
+      background: var(--gold-soft);
+      border-color: var(--gold-soft);
+      transform: translateY(-1px);
+    }
+
+    .btn-outline {
       background: transparent;
       color: var(--text);
-      border: 1px solid var(--border);
-      box-shadow: none;
+      border: 1px solid var(--border-mid);
     }
 
-    .hero { padding: 84px 0 58px; }
+    .btn-outline:hover {
+      border-color: var(--gold-line);
+      color: var(--gold-soft);
+      transform: translateY(-1px);
+    }
+
+    /* Eyebrow label */
+    .label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 16px;
+    }
+
+    .label::before {
+      content: '';
+      display: block;
+      width: 22px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      padding: 100px 0 80px;
+      overflow: hidden;
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -100px;
+      right: -100px;
+      width: 650px;
+      height: 650px;
+      background: radial-gradient(circle, rgba(201,168,76,0.06) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero .container { position: relative; z-index: 1; }
 
     .hero-grid {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 34px;
+      grid-template-columns: 1fr 320px;
+      gap: 60px;
       align-items: center;
     }
 
-    .eyebrow {
-      display: inline-block;
-      color: var(--accent-2);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.78rem;
-      margin-bottom: 18px;
-      font-weight: 700;
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 5.5vw, 4.6rem);
+      font-weight: 400;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      margin-bottom: 22px;
+      color: var(--text);
     }
 
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4.7rem);
-      line-height: 1.04;
-      margin-bottom: 18px;
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-soft);
     }
 
-    .hero p {
-      max-width: 680px;
-      color: var(--muted);
-      font-size: 1.06rem;
-      margin-bottom: 28px;
+    .hero-intro {
+      color: var(--text-mid);
+      font-size: 1.02rem;
+      font-weight: 300;
+      max-width: 560px;
+      margin-bottom: 36px;
+      line-height: 1.8;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 14px;
-      margin-bottom: 28px;
+      gap: 12px;
+      margin-bottom: 52px;
     }
 
-    .stats {
+    .stat-row {
       display: grid;
-      grid-template-columns: repeat(3, minmax(120px, 1fr));
-      gap: 16px;
-    }
-
-    .stat-card,
-    .hero-card,
-    .section-card,
-    .project-card,
-    .contact-card {
-      background: var(--panel);
+      grid-template-columns: repeat(3, 1fr);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .stat-card { padding: 18px; }
-    .stat-card h3 { font-size: 1.5rem; margin-bottom: 6px; }
-    .stat-card p { color: var(--muted); font-size: 0.92rem; margin-bottom: 0; }
+    .stat-item {
+      padding: 20px 22px;
+      border-right: 1px solid var(--border);
+    }
 
-    .hero-card { padding: 18px; }
+    .stat-item:last-child { border-right: none; }
 
-    .hero-card img {
-      aspect-ratio: 4 / 5;
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      color: var(--gold-soft);
+      line-height: 1.1;
+      margin-bottom: 5px;
+    }
+
+    .stat-desc {
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.4;
+    }
+
+    .hero-photo {
+      position: relative;
+    }
+
+    .hero-photo img {
+      width: 100%;
+      aspect-ratio: 3 / 4;
       object-fit: cover;
-      border-radius: 18px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      filter: grayscale(15%) contrast(1.04);
     }
 
-    section { padding: 24px 0 68px; }
+    .hero-photo::before,
+    .hero-photo::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.45;
+    }
+
+    .hero-photo::before { top: -6px; left: -6px; border-width: 1px 0 0 1px; }
+    .hero-photo::after  { bottom: -6px; right: -6px; border-width: 0 1px 1px 0; }
+
+    /* Sections */
+    section { padding: 88px 0; }
+
+    .section-rule {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin-bottom: 60px;
+    }
 
     .section-header {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
       align-items: end;
-      margin-bottom: 26px;
+      margin-bottom: 48px;
     }
 
     .section-header h2 {
-      font-size: clamp(1.8rem, 3vw, 2.8rem);
-      margin-bottom: 8px;
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
     }
 
     .section-header p {
-      color: var(--muted);
-      max-width: 650px;
+      color: var(--text-mid);
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.75;
     }
+
+    /* About */
+    #about { background: var(--bg-raised); }
 
     .about-grid {
       display: grid;
-      grid-template-columns: 1.08fr 0.92fr;
-      gap: 24px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: var(--col-gap);
+      align-items: start;
     }
 
-    .section-card { padding: 28px; }
-    .section-card p,
-    .section-card li { color: var(--muted); }
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+    }
 
-    .skills-list {
+    .card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 400;
+      color: var(--text);
+      margin-bottom: 18px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .card p {
+      color: var(--text-mid);
+      font-size: 0.94rem;
+      font-weight: 300;
+      line-height: 1.8;
+    }
+
+    .card p + p { margin-top: 14px; }
+
+    .skills-wrap {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      list-style: none;
-      margin-top: 14px;
+      gap: 8px;
+      margin-top: 4px;
     }
 
-    .skills-list li {
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      font-size: 0.94rem;
+    .skill-tag {
+      padding: 6px 12px;
+      border-radius: var(--radius-sm);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border);
+      font-size: 0.79rem;
+      color: var(--text-mid);
+      letter-spacing: 0.02em;
+      transition: border-color 0.2s, color 0.2s;
+      cursor: default;
     }
 
+    .skill-tag:hover {
+      border-color: var(--gold-line);
+      color: var(--gold-soft);
+    }
+
+    /* Projects */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 24px;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--col-gap);
     }
 
-    .project-card { overflow: hidden; }
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.25s;
+    }
 
-    .project-image {
+    .project-card:hover { border-color: var(--gold-line); }
+
+    .project-thumb {
+      width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
-      background: linear-gradient(135deg, rgba(124, 156, 255, 0.2), rgba(110, 231, 249, 0.1));
+      background: var(--bg-subtle);
+      filter: grayscale(25%) contrast(1.04);
+      transition: filter 0.35s;
     }
 
-    .project-content { padding: 22px; }
+    .project-card:hover .project-thumb { filter: grayscale(0%) contrast(1.04); }
 
-    .project-tag {
-      display: inline-block;
-      padding: 7px 12px;
-      border-radius: 999px;
-      background: rgba(124, 156, 255, 0.15);
-      color: #dbe4ff;
-      font-size: 0.8rem;
-      letter-spacing: 0.05em;
+    .project-body {
+      padding: 26px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .project-genre {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.71rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
+      color: var(--gold);
       margin-bottom: 12px;
     }
 
-    .project-content h3 { font-size: 1.45rem; margin-bottom: 10px; }
-    .project-content p { color: var(--muted); margin-bottom: 18px; }
+    .project-genre::before {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
 
-    .project-meta {
+    .project-body h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 400;
+      line-height: 1.15;
+      margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+
+    .project-body p {
+      color: var(--text-mid);
+      font-size: 0.91rem;
+      font-weight: 300;
+      line-height: 1.78;
+      margin-bottom: 14px;
+    }
+
+    .meta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 18px;
+      gap: 7px;
+      margin: 10px 0 16px;
     }
 
-    .project-meta span {
-      font-size: 0.88rem;
-      color: var(--muted);
-      padding: 8px 12px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      border-radius: 999px;
+    .meta-chip {
+      padding: 5px 11px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--text-dim);
+      letter-spacing: 0.03em;
     }
 
-    .project-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
+    .role-block {
+      margin-top: auto;
+      padding: 14px 16px;
+      border-left: 2px solid var(--gold);
+      background: var(--gold-dim);
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
     }
 
-    .project-links a { font-weight: 600; color: var(--accent-2); }
+    .role-block strong {
+      display: block;
+      font-size: 0.71rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
 
-    .contact-card {
-      padding: 32px;
+    .role-block p {
+      font-size: 0.87rem;
+      color: var(--text-mid);
+      line-height: 1.65;
+      margin: 0;
+    }
+
+    /* Contact */
+    #contact { background: var(--bg-raised); }
+
+    .contact-wrap {
       display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 20px;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
       align-items: center;
     }
 
-    .contact-card p { color: var(--muted); margin-top: 8px; }
+    .contact-wrap h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      font-weight: 400;
+      line-height: 1.07;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
 
-    .contact-links {
+    .contact-wrap > div:first-child p {
+      color: var(--text-mid);
+      font-size: 0.97rem;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    .contact-links { display: flex; flex-direction: column; gap: 12px; }
+
+    .contact-link {
       display: flex;
-      flex-direction: column;
-      gap: 10px;
-      min-width: 280px;
-    }
-
-    .contact-links a {
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--bg-card);
       color: var(--text);
-      word-break: break-word;
+      font-size: 0.9rem;
+      transition: border-color 0.2s, background 0.2s, color 0.2s;
     }
 
+    .contact-link:hover {
+      border-color: var(--gold-line);
+      background: var(--bg-subtle);
+      color: var(--gold-soft);
+    }
+
+    .contact-link span {
+      font-size: 0.71rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .contact-link:hover span { color: var(--gold); }
+
+    /* Footer */
     footer {
-      padding: 30px 0 46px;
-      color: var(--muted);
-      font-size: 0.95rem;
+      padding: 28px 0 40px;
+      border-top: 1px solid var(--border);
     }
 
     .footer-row {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       gap: 16px;
       flex-wrap: wrap;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding-top: 24px;
     }
 
+    footer p { font-size: 0.82rem; color: var(--text-dim); }
+    footer a { font-size: 0.82rem; color: var(--text-dim); transition: color 0.2s; }
+    footer a:hover { color: var(--gold-soft); }
+
+    /* Animations */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero h1, .hero-intro, .hero-actions, .stat-row {
+      opacity: 0;
+      animation: fadeUp 0.6s ease forwards;
+    }
+
+    .hero h1      { animation-delay: 0.05s; }
+    .hero-intro   { animation-delay: 0.17s; }
+    .hero-actions { animation-delay: 0.28s; }
+    .stat-row     { animation-delay: 0.4s; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero h1, .hero-intro, .hero-actions, .stat-row {
+        animation: none; opacity: 1;
+      }
+    }
+
+    /* Responsive */
     @media (max-width: 960px) {
-      .hero-grid,
-      .about-grid,
-      .contact-card,
-      .projects-grid {
+      .hero-grid, .about-grid, .contact-wrap, .section-header {
         grid-template-columns: 1fr;
       }
-
-      .section-header {
-        align-items: start;
-        flex-direction: column;
-      }
+      .hero-photo { max-width: 280px; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .section-header { gap: 20px; }
     }
 
-    @media (max-width: 700px) {
-      .nav { flex-direction: column; }
-      .nav-links { justify-content: center; }
-      .stats { grid-template-columns: 1fr; }
-      .hero { padding-top: 58px; }
+    @media (max-width: 640px) {
+      .nav { flex-direction: column; gap: 12px; }
+      .nav-links { gap: 18px; flex-wrap: wrap; justify-content: center; }
+      .stat-row { grid-template-columns: 1fr; }
+      .stat-item { border-right: none; border-bottom: 1px solid var(--border); }
+      .stat-item:last-child { border-bottom: none; }
+      section { padding: 60px 0; }
+      .hero { padding: 64px 0 60px; }
     }
   </style>
 </head>
 <body>
+
   <header class="topbar">
     <div class="container nav">
       <a href="#home" class="brand">Liam <span>Milinazzo</span></a>
-      <nav class="nav-links">
+      <nav class="nav-links" aria-label="Site navigation">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#contact">Contact</a>
-        <a href="#projects" class="button">View Portfolio</a>
+        <a href="#projects" class="btn btn-primary">View Work</a>
       </nav>
     </div>
   </header>
 
   <main>
-    <section class="hero" id="home">
-      <div class="container hero-grid">
-        <div>
-          <div class="eyebrow">Game Developer Portfolio</div>
-          <h1>Designing playful worlds, memorable mechanics, and polished player experiences.</h1>
-          <p>
-            I’m Liam Milinazzo, an Immersive Media and Game Development student at Northern Arizona University focused on game design, interactive media, and visual storytelling. My work combines creative direction, technical problem-solving, and collaborative development, with experience spanning published games, international game jam work, student career support, and AI quality evaluation.
-          </p>
 
-          <div class="hero-actions">
-            <a class="button" href="#projects">Explore My Games</a>
-            <a class="button secondary" href="#contact">Contact Me</a>
+    <section class="hero" id="home" aria-label="Introduction">
+      <div class="container">
+        <div class="hero-grid">
+          <div>
+            <h1>Building worlds players <em>want to stay in.</em></h1>
+            <p class="hero-intro">
+              I'm Liam Milinazzo — Immersive Media and Game Development student at Northern Arizona University (GPA 3.55). I work across game design, interactive media, and visual storytelling, bringing creative direction and technical execution to every project.
+            </p>
+            <div class="hero-actions">
+              <a class="btn btn-primary" href="#projects">See My Work</a>
+              <a class="btn btn-outline" href="#contact">Get in Touch</a>
+            </div>
+            <div class="stat-row">
+              <div class="stat-item">
+                <div class="stat-num">2</div>
+                <div class="stat-desc">Published games in this portfolio</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">1st Place</div>
+                <div class="stat-desc">Consecutive Game Jam wins in Japan</div>
+              </div>
+              <div class="stat-item">
+                <div class="stat-num">100+</div>
+                <div class="stat-desc">Students coached in career development</div>
+              </div>
+            </div>
           </div>
-
-          <div class="stats">
-            <div class="stat-card">
-              <h3>2</h3>
-              <p>Published games featured in this portfolio</p>
-            </div>
-            <div class="stat-card">
-              <h3>International</h3>
-              <p>Collaborative experience from a Japan game jam and study abroad project</p>
-            </div>
-            <div class="stat-card">
-              <h3>Multi-Role</h3>
-              <p>Game design, artwork, playtesting, collaboration, and production support</p>
-            </div>
+          <div class="hero-photo">
+            <img src="images/headshot.jpeg" alt="Headshot of Liam Milinazzo" />
           </div>
-        </div>
-
-        <div class="hero-card">
-          <img src="images/headshot.jpeg" alt="Headshot of Liam Milinazzo" />
         </div>
       </div>
     </section>
 
-    <section id="about">
+    <section id="about" aria-label="About Liam">
       <div class="container">
+        <hr class="section-rule" />
         <div class="section-header">
           <div>
-            <div class="eyebrow">About Me</div>
-            <h2>Creative developer with a strong interest in teamwork, visual identity, and accessible gameplay</h2>
+            <div class="label">About Me</div>
+            <h2>Designer, developer, and collaborator</h2>
           </div>
-          <p>
-            My projects are shaped by collaboration, cultural inspiration, and a desire to make games that feel inviting while still offering depth. I enjoy working across disciplines, contributing to both the artistic and design side of development, and building experiences that connect theme, mechanics, and player emotion.
-          </p>
+          <p>I care about the whole picture — theme, mechanics, and the moment a player clicks with what you've built. Equally comfortable on the art side as I am deep in systems logic.</p>
         </div>
-
         <div class="about-grid">
-          <div class="section-card">
-            <h3 style="margin-bottom: 12px;">About Me</h3>
-            <p>
-              I am an Immersive Media and Game Development student at Northern Arizona University with experience in game design, visual media, international collaboration, and digital production. My academic background includes 3D fabrication, 3D modeling, and new media fundamentals, and my study abroad experience in Japan strengthened both my creative process and my perspective on game culture, design history, and collaborative development.
-            </p>
-            <p style="margin-top: 16px;">
-              Outside of game development, I work in student career support and AI quality evaluation. At NAU, I have worked with over 100 students through resume reviews, LinkedIn support, and career development guidance. I also work remotely training AI models through media evaluation, output-versus-input comparison, and quality control. These roles have strengthened my communication, analytical thinking, adaptability, and attention to detail.
-            </p>
-            <p style="margin-top: 16px;">
-              My creative and technical skill set includes Photoshop, InDesign, Lightroom, Premiere Pro, After Effects, Blender, Construct 3, Tinkercad, HTML, Python, C, C#, Java, JavaScript, JIRA, Confluence, and Unreal Engine 5. I am especially interested in building games and interactive experiences that are visually memorable, accessible to players, and grounded in strong collaboration and thoughtful design.
-            </p>
+          <div class="card">
+            <h3>Background</h3>
+            <p>I'm studying Immersive Media and Game Development at Northern Arizona University (GPA 3.55), with coursework in 3D fabrication, 3D modeling, new media fundamentals, and game theory. My study abroad in Japan — where I researched gaming history through site visits to major industry locations and won a competitive university-sponsored Game Jam — sharpened how I think about design, culture, and building under pressure with people from different backgrounds.</p>
+            <p>Alongside my studies I hold three concurrent roles: at NAU's Career Development office I've delivered 100+ one-on-one coaching sessions covering resumes, LinkedIn, and job search strategy, and co-led a university-wide Career Fair with 136 participants. Through Let's Talk Code I collaborate with K-12 teachers nationwide to develop computer science curricula across multiple states. I also evaluate AI-generated media outputs remotely, identifying edge cases and quality issues that inform model improvement. All three roles have pushed my communication, analytical thinking, and attention to detail in ways that directly carry into how I approach game design.</p>
+            <p>My toolkit spans creative and technical work: Photoshop, Illustrator, Lightroom, Premiere Pro, After Effects, Blender, Construct 3, Tinkercad, Unreal Engine 5, Twine, HTML, Python, C, C#, Java, JavaScript, JIRA, Confluence, and Excel. I'm drawn to projects where strong collaboration and intentional design come together to make something players remember.</p>
           </div>
-
-          <div class="section-card">
-            <h3 style="margin-bottom: 12px;">Skills &amp; Tools</h3>
-            <ul class="skills-list">
-              <li>Game Design</li>
-              <li>Gameplay Systems</li>
-              <li>Level Design</li>
-              <li>3D Modeling</li>
-              <li>3D Fabrication</li>
-              <li>Visual Storytelling</li>
-              <li>Playtesting</li>
-              <li>Cross-Cultural Collaboration</li>
-              <li>Photoshop</li>
-              <li>InDesign</li>
-              <li>Lightroom</li>
-              <li>Premiere Pro</li>
-              <li>After Effects</li>
-              <li>Blender</li>
-              <li>Unreal Engine 5</li>
-              <li>Construct 3</li>
-              <li>Tinkercad</li>
-              <li>Python</li>
-              <li>HTML</li>
-              <li>Java</li>
-              <li>JavaScript</li>
-              <li>C</li>
-              <li>C#</li>
-              <li>JIRA</li>
-              <li>Confluence</li>
-            </ul>
+          <div class="card">
+            <h3>Skills &amp; Tools</h3>
+            <div class="skills-wrap">
+              <span class="skill-tag">Game Design</span>
+              <span class="skill-tag">Gameplay Systems</span>
+              <span class="skill-tag">Level Design</span>
+              <span class="skill-tag">3D Modeling</span>
+              <span class="skill-tag">3D Fabrication</span>
+              <span class="skill-tag">Visual Storytelling</span>
+              <span class="skill-tag">Playtesting</span>
+              <span class="skill-tag">Cross-Cultural Collab</span>
+              <span class="skill-tag">Photoshop</span>
+              <span class="skill-tag">Illustrator</span>
+              <span class="skill-tag">Lightroom</span>
+              <span class="skill-tag">Premiere Pro</span>
+              <span class="skill-tag">After Effects</span>
+              <span class="skill-tag">Blender</span>
+              <span class="skill-tag">Unreal Engine 5</span>
+              <span class="skill-tag">Construct 3</span>
+              <span class="skill-tag">Tinkercad</span>
+              <span class="skill-tag">Python</span>
+              <span class="skill-tag">HTML</span>
+              <span class="skill-tag">Java</span>
+              <span class="skill-tag">JavaScript</span>
+              <span class="skill-tag">C</span>
+              <span class="skill-tag">C#</span>
+              <span class="skill-tag">JIRA</span>
+              <span class="skill-tag">Confluence</span>
+              <span class="skill-tag">Twine</span>
+              <span class="skill-tag">Excel</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="projects">
+    <section id="projects" aria-label="Featured Projects">
       <div class="container">
+        <hr class="section-rule" />
         <div class="section-header">
           <div>
-            <div class="eyebrow">Featured Projects</div>
-            <h2>Published games and collaborative work</h2>
+            <div class="label">Featured Projects</div>
+            <h2>Published games &amp; collaborative work</h2>
           </div>
-          <p>
-            These projects highlight my experience in concept development, art direction, gameplay-focused thinking, and international team collaboration.
-          </p>
+          <p>Two published games built from real experiences — one rooted in a trip through Nara, one born from the chaos of an international game jam.</p>
         </div>
-
         <div class="projects-grid">
+
           <article class="project-card">
-            <img class="project-image" src="images/nara-order.jpg" alt="Screenshot from Nara Order" />
-            <div class="project-content">
-              <div class="project-tag">Published Game</div>
+            <img class="project-thumb" src="images/nara-order.jpg" alt="Screenshot from Nara Order" />
+            <div class="project-body">
+              <div class="project-genre">Tycoon / Time Management</div>
               <h3>Nara Order</h3>
-              <p>
-                <strong>Nara Order</strong> is a single-player tycoon-style food stand game set in Nara Park and near Tōdai-ji, one of Japan’s most historically significant cultural locations. Players take on the role of a food stand employee serving a range of customers, from children ordering drinks and ramen to deer wanting biscuits and even Buddha requesting blessed water from the temple cleansing basin.
-              </p>
-              <div class="project-meta">
-                <span>Genre: Tycoon / Time Management</span>
-                <span>Mode: Single Player</span>
-                <span>Setting: Nara, Japan</span>
+              <p>A single-player tycoon-style food stand game set in Nara Park, near Tōdai-ji. You play as a food stand employee juggling orders from a rotating cast of customers — children, deer nudging you for biscuits, and even Buddha requesting blessed water from the temple cleansing basin.</p>
+              <div class="meta-row">
+                <span class="meta-chip">Single Player</span>
+                <span class="meta-chip">Setting: Nara, Japan</span>
+                <span class="meta-chip">Published</span>
               </div>
-              <p>
-                The gameplay revolves around reading the ticket shown at the top of the screen and quickly assembling the correct order before time runs out. Each successful order increases the player’s score, while missed orders reduce available lives. As the session continues, the pace intensifies, creating a simple but increasingly demanding gameplay loop built around speed, accuracy, and visual recognition.
-              </p>
-              <p>
-                What makes the project especially meaningful is how directly it reflects our group’s trip to Japan. The game’s setting is based on the archway we walked beneath before entering Tōdai-ji, and multiple items and characters are inspired by real details from Nara Park, including shika senbei, the temple water basin, deer interactions, architecture, and foods we personally experienced. The art direction was designed to capture a calm, semi-realistic anime atmosphere inspired by Japanese Buddhist temple environments and the accessible design philosophy often associated with Nintendo.
-              </p>
-              <p>
-                <strong>My contribution:</strong> I was the lead developer responsible for the full codebase and backend systems. I implemented the gameplay loop and interaction flow, including customer ordering logic, scoring, lives, and pacing. I also handled asset importing and integration, ensuring the art and UI elements were connected cleanly to gameplay and ran smoothly in the final build.
-              </p>
+              <p>The loop is focused: read the ticket, build the order fast, don't let time run out. Every detail traces back to something we actually saw in Nara — the archway before Tōdai-ji, the deer wandering the park, the shika senbei sold from carts along the path. The art aims for a calm, semi-realistic anime atmosphere influenced by Buddhist temple aesthetics and Nintendo's welcoming design philosophy.</p>
+              <div class="role-block">
+                <strong>My Role — Lead Developer</strong>
+                <p>Wrote the full codebase and built all backend systems: customer logic, scoring, lives, pacing, and the complete interaction flow. Handled asset integration, connecting art and UI to gameplay for a clean final build.</p>
+              </div>
             </div>
           </article>
 
           <article class="project-card">
-            <img class="project-image" src="images/sugar-scape.jpg" alt="Screenshot from Sugar Scape" />
-            <div class="project-content">
-              <div class="project-tag">Published Game</div>
+            <img class="project-thumb" src="images/sugar-scape.jpg" alt="Screenshot from Sugar Scape" />
+            <div class="project-body">
+              <div class="project-genre">Survival / Arcade</div>
               <h3>Sugar Scape</h3>
-              <p>
-                <strong>Sugar Scape</strong> is a survival-based arcade maze game created during my Japanese study abroad experience with an international team. Players move through a colorful maze using the arrow keys, hunting cute creatures to increase their score while trying to survive as the number of enemies steadily grows.
-              </p>
-              <div class="project-meta">
-                <span>Genre: Survival / Arcade</span>
-                <span>Format: Team Game Jam Project</span>
-                <span>Controls: Arrow Keys + Space Bar</span>
+              <p>A survival arcade maze game built during my study abroad in Japan with an international team. You move through a colorful maze hunting cute creatures to rack up your score — but the more you eat, the more enemies appear. At some point, staying alive becomes the whole game.</p>
+              <div class="meta-row">
+                <span class="meta-chip">International Game Jam</span>
+                <span class="meta-chip">Arrow Keys + Space</span>
+                <span class="meta-chip">Published</span>
               </div>
-              <p>
-                The core loop is fast and straightforward: roam the maze, stay mobile, and eat nearby animals with the space bar when they are within range. The more the player consumes, the more creatures appear, turning the game into a test of movement, timing, and score optimization. The goal is to survive as long as possible while pushing for a new high score.
-              </p>
-              <p>
-                The project’s playful aesthetic came from team-created artwork developed during the game jam. I worked alongside Jason, Yerik, Hizac, and other collaborators to help bring the game together. The final result reflects both the chaotic fun of arcade design and the collaborative energy of building something quickly with an international team.
-              </p>
-              <p>
-                <strong>My contribution:</strong> I served as the lead developer on the team, designing the level layout and implementing the core gameplay systems. I coded the player and enemy movement, built time-based interactions, and added scaling that increases difficulty as the session continues. I also contributed to the visual side by creating artwork for key characters, including the baby (the player character) and the panda (the primary advertised enemy). I handled the full programming workload while the rest of the team focused on art, sound, and the presentation of the project.
-              </p>
+              <p>The core loop is tight: roam, stay mobile, eat nearby animals when they're in range. The enemy count scales as you play, so what starts as a score chase turns into a test of movement and timing. The result feels like exactly what it was — something fast, playful, and built by a group having fun with an absurd idea under a tight deadline.</p>
+              <div class="role-block">
+                <strong>My Role — Lead Developer</strong>
+                <p>Designed the level layout, coded player and enemy movement, built time-based interactions, and added difficulty scaling. Also created artwork for the baby (player character) and the panda (main enemy).</p>
+              </div>
             </div>
           </article>
+
         </div>
       </div>
     </section>
 
-    <section id="contact">
+    <section id="contact" aria-label="Contact">
       <div class="container">
-        <div class="contact-card">
+        <hr class="section-rule" />
+        <div class="contact-wrap">
           <div>
-            <div class="eyebrow">Contact</div>
-            <h2>Let’s connect</h2>
-            <p>
-              If you’d like to talk about game development, collaboration, internships, or future creative opportunities, feel free to reach out.
-            </p>
+            <div class="label">Contact</div>
+            <h2>Let's work together</h2>
+            <p>Open to internships, collaborations, and creative opportunities in game development. Drop me a line and let's talk.</p>
           </div>
-
           <div class="contact-links">
-            <a class="button" href="mailto:ljm454@nau.edu">ljm454@nau.edu</a>
-            <a class="button secondary" href="https://www.linkedin.com/in/liam-milinazzo-213a97358/" target="_blank" rel="noopener noreferrer">LinkedIn Profile</a>
-            <a class="button secondary" href="https://ljm454.itch.io" target="_blank" rel="noopener noreferrer">View My itch.io</a>
+            <a class="contact-link" href="mailto:ljm454@nau.edu">
+              ljm454@nau.edu
+              <span>Email ↗</span>
+            </a>
+            <a class="contact-link" href="https://www.linkedin.com/in/liam-milinazzo-213a97358/" target="_blank" rel="noopener noreferrer">
+              LinkedIn — Liam Milinazzo
+              <span>Open ↗</span>
+            </a>
+            <a class="contact-link" href="https://ljm454.itch.io" target="_blank" rel="noopener noreferrer">
+              itch.io — ljm454
+              <span>Open ↗</span>
+            </a>
+            <div class="contact-link" style="cursor:default;">
+              Phone — Available Upon Request
+              <span>Private</span>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer>
     <div class="container footer-row">
       <p>&copy; 2026 Liam Milinazzo. All rights reserved.</p>
+      <div style="display:flex;gap:24px;">
+        <a href="https://www.linkedin.com/in/liam-milinazzo-213a97358/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+        <a href="https://ljm454.itch.io" target="_blank" rel="noopener noreferrer">itch.io</a>
+        <a href="mailto:ljm454@nau.edu">Email</a>
+      </div>
     </div>
   </footer>
+
 </body>
 </html>
